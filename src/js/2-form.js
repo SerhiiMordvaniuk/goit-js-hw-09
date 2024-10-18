@@ -10,14 +10,12 @@ const formEmail = document.querySelector(".email")
 
 
 const localData = JSON.parse(localStorage.getItem("feedback-form-state"))
-function checkLocalData() {
-    if (typeof localData !== "object") {
-        return
-    }
-    formMessage.value = localData.message
-        formEmail.value = localData.email
-}
 
+
+if (localStorage.getItem('feedback-form-state') !== null) {
+    formMessage.value = localData.message
+    formEmail.value = localData.email
+}
 
 
 
@@ -29,15 +27,19 @@ form.addEventListener("input", (event) => {
 
 form.addEventListener("submit", (event) => {
     if (event.currentTarget.email.value == "" || event.currentTarget.message.value == "") {
-        alert("Fill please all fields")        
+        alert("Fill please all fields")
+        return
     }
-    event.preventDefault();
-    localStorage.removeItem("feedback-form-state")
-    if (typeof event.currentTarget.email.value == "string" && typeof event.currentTarget.message.value == "string") {
-        console.log(formData);
+    else {
+        event.preventDefault();
+        localStorage.removeItem("feedback-form-state")
+        if (typeof event.currentTarget.email.value == "string" && typeof event.currentTarget.message.value == "string") {
+            console.log(formData);
+        }
+        localStorage.removeItem("feedback-form-state")
+        formData.email = "";
+        formData.message = "";
+        form.reset()
     }
-    form.reset()
-    console.log(typeof event.currentTarget.message.value);
 })
-
 
